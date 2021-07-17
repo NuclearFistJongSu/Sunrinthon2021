@@ -440,11 +440,19 @@ class RemoteDataSourceImpl(var context: Context) : RemoteDataSource {
 
                 } else {
                     println(call.request())
-                    val post: Post = Gson().fromJson(
-                        Gson().toJson(response.body()!!.data),
-                        Post::class.java
-                    )
-                    if(post == null) {
+
+                    val post: Post? = null
+                    try {
+                        val post: Post = Gson().fromJson(
+                            Gson().toJson(response.body()!!.data),
+                            Post::class.java
+                        )
+
+                    } catch(e: Exception) {
+
+                    }
+
+                    if (post == null) {
                         onFailure(Throwable(response.body()!!.message))
                         return;
                     }

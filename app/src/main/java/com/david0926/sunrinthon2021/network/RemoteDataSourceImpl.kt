@@ -1,11 +1,13 @@
 package com.david0926.sunrinthon2021.network
 
+import android.content.Context
 import android.util.Log
 import com.david0926.sunrinthon2021.data.UserModel
 import com.david0926.sunrinthon2021.data.auth.*
 import com.david0926.sunrinthon2021.data.post.Post
 import com.david0926.sunrinthon2021.data.post.PostRequest
 import com.david0926.sunrinthon2021.network.auth.AuthManager
+import com.david0926.sunrinthon2021.util.UserCache
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType
@@ -14,8 +16,10 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
-class RemoteDataSourceImpl : RemoteDataSource {
+class RemoteDataSourceImpl(var context: Context) : RemoteDataSource {
 
     private fun toPart(obj: Any?): RequestBody? {
         if (obj == null) return null
@@ -52,7 +56,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
 
     override fun login(
         loginRequest: LoginRequest,
-        onResponse: (CommonResponse, UserModel?) -> Unit,
+        onResponse: (CommonResponse, UserModel?, String?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
         StockerRetrofit.authService.login(loginRequest).enqueue(object: Callback<CommonResponse> {
@@ -78,8 +82,9 @@ class RemoteDataSourceImpl : RemoteDataSource {
                         onFailure(Throwable(response.body()!!.message))
                         return;
                     }
+                    println("token = ${UserModel.token}")
                     getuser(response.body()!!.data.toString(), { response, usermodel ->
-                        onResponse(response, usermodel!!.user)
+                        onResponse(response, usermodel!!.user, UserModel.token)
                     }, {
                         onFailure(it)
                     })
@@ -93,7 +98,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse, User?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        StockerRetrofit.authService.getUser("Bearer $Authorization").enqueue(object: Callback<CommonResponse> {
+        StockerRetrofit.authService.getUser("Bearer ${Authorization}").enqueue(object: Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }
@@ -102,12 +107,12 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 call: Call<CommonResponse>,
                 response: Response<CommonResponse>
             ) {
+                println("Bearer ${Authorization}")
                 if(response.body() == null) {
 //                    onResponse(
 //                        Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java),
 //                        null
 //                    )
-
                     onFailure(Throwable(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java).message))
                 } else {
                     println(response.body()!!)
@@ -130,7 +135,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        StockerRetrofit.authService.updateUser("Bearer $UserModel.token", toPart(userInfoRequest.isExpert), toPart(userInfoRequest.information), toPart(userInfoRequest.career)).enqueue(object: Callback<CommonResponse> {
+        StockerRetrofit.authService.updateUser("Bearer ${UserCache.getToken(context)}", toPart(userInfoRequest.isExpert), toPart(userInfoRequest.information), toPart(userInfoRequest.career)).enqueue(object: Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }
@@ -182,7 +187,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        StockerRetrofit.authService.updateProfilePhoto("Bearer $UserModel.token", image).enqueue(object: Callback<CommonResponse> {
+        StockerRetrofit.authService.updateProfilePhoto("Bearer ${UserCache.getToken(context)}", image).enqueue(object: Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }
@@ -235,7 +240,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        StockerRetrofit.authService.updatePortfolioImage("Bearer $UserModel.token", image).enqueue(object: Callback<CommonResponse> {
+        StockerRetrofit.authService.updatePortfolioImage("Bearer ${UserCache.getToken(context)}", image).enqueue(object: Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }
@@ -261,7 +266,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse, Post?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        StockerRetrofit.postService.uploadPost("Bearer $UserModel.token", postRequest).enqueue(object: Callback<CommonResponse> {
+        StockerRetrofit.postService.uploadPost("Bearer ${UserCache.getToken(context)}", postRequest).enqueue(object: Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }
@@ -319,6 +324,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
 //                        )
                         onFailure(Throwable(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java).message))
                     } else {
+                        println("BODY " + response.body()!!.data)
                         val type = object : TypeToken<ArrayList<Post>>() {}.type
                         val posts: ArrayList<Post> = Gson().fromJson(
                             Gson().toJson(response.body()!!.data), type
@@ -410,7 +416,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse, Post?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        StockerRetrofit.postService.addComment(_id, "Bearer $UserModel.token", contents).enqueue(object: Callback<CommonResponse> {
+        StockerRetrofit.postService.addComment(_id, "Bearer ${UserCache.getToken(context)}", contents).enqueue(object: Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }
@@ -449,7 +455,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse, Post?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        StockerRetrofit.postService.voteComment(_id, comment_id, "Bearer ${UserModel.token}").enqueue(object : Callback<CommonResponse> {
+        StockerRetrofit.postService.voteComment(_id, comment_id, "Bearer ${UserCache.getToken(context)}").enqueue(object : Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }

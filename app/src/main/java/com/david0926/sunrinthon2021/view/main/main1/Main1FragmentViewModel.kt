@@ -1,5 +1,6 @@
 package com.david0926.sunrinthon2021.view.main.main1
 
+import android.content.Context
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.david0926.sunrinthon2021.data.post.Post
 import com.david0926.sunrinthon2021.network.post.PostManager
+import kotlin.coroutines.coroutineContext
 
 
 class Main1FragmentViewModel : ViewModel() {
@@ -29,9 +31,9 @@ class Main1FragmentViewModel : ViewModel() {
         }
     }
 
-    private fun getPostFromRepo(page: Int) {
+    private fun getPostFromRepo(page: Int, context: Context) {
         isLoaded.value = false
-        val postManager = PostManager()
+        val postManager = PostManager(context)
         postManager.getPosts(AmountPerPage, page, {response, posts ->
             isLoaded.value = true
             if(response.success) {
@@ -47,9 +49,9 @@ class Main1FragmentViewModel : ViewModel() {
         })
     }
 
-    fun nextPage(finish: () -> Unit) {
+    fun nextPage(finish: () -> Unit, context: Context) {
         if(hasNext) {
-            getPostFromRepo(page)
+            getPostFromRepo(page, context)
             if(hasNext) {
                 finish()
             }

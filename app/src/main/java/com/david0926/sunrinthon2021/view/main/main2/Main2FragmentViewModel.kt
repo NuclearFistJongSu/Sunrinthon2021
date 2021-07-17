@@ -17,13 +17,19 @@ class Main2FragmentViewModel : ViewModel() {
 
     val PostList = ObservableArrayList<Post>()
 
-    private fun getPersonalPostFromRepo(context:Context, page: Int) {
-        val authManager = AuthManager()
-        authManager.getUser(UserModel.token, { response, data ->
+    fun getPersonalPostFromRepo(context:Context) {
+        val postManager = PostManager(context)
+        postManager.getPosts(0, Int.MAX_VALUE, { response, datas ->
             if(response.success) {
 
-                if (data != null) {
-                    PostList.addAll(data.posts as ObservableArrayList<Post>)
+                if (datas != null) {
+
+                    for(data in datas) {
+                        if(data.by!!._id == UserCache.getUser(context)._id)
+                            PostList.add(data)
+                    }
+
+                    PostList.reverse()
                 }
             }
         }, {

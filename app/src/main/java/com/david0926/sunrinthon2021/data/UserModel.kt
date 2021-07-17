@@ -12,6 +12,7 @@ data class UserModel(
     var career: String
 )
 {
+
     companion object {
         var token: String = ""
     }

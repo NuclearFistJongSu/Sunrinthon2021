@@ -35,6 +35,7 @@ class Main2RecyclerAdapter(userModel: UserModel) :
     }
 
     override fun onBindViewHolder(holder: Main2RecyclerHolder, position: Int) {
+        holder.binding.position = 1
         holder.binding.user = user
 
         holder.binding.root.setOnClickListener { onItemClick.invoke(position) }

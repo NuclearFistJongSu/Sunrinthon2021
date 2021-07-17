@@ -32,7 +32,7 @@ class Main2Fragment :
         val adapter = Main2RecyclerAdapter(UserCache.getUser(requireContext()))
         adapter.onItemClick = {
             val articleIntent = Intent(requireContext(), ArticleActivity::class.java)
-            articleIntent.putExtra("post", viewModel.PostList[it-1])
+            articleIntent.putExtra("post", viewModel.PostList[it])
             articleIntent.putExtra("user", UserCache.getUser(requireContext()))
             startActivity(articleIntent)
         }

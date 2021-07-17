@@ -37,9 +37,16 @@ class ArticleActivity : MvvmActivity<ActivityArticleBinding, ArticleViewModel>(R
             val message = viewModel.comment.value!!
             viewModel.comment.value=""
             val postManager = PostManager(this)
-            postManager.addComment(UserCache.getUser(this)._id, message, {response, posts ->
+            postManager.addComment(binding.post!!._id, message, {response, posts ->
                 if(response.success) {
-                    adapter.setComments(post.comments as ArrayList<Comment>)
+
+                    postManager.getPost(binding.post!!._id, {response, post ->
+                        viewModel.CommentList.clear()
+                        viewModel.CommentList.addAll(post!!.comments as Collection<Comment>)
+
+                    }, {
+
+                    })
                 } else {
                     return@addComment
                 }
@@ -49,4 +56,6 @@ class ArticleActivity : MvvmActivity<ActivityArticleBinding, ArticleViewModel>(R
         }
 
     }
+
+
 }

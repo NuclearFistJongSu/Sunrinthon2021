@@ -6,7 +6,7 @@ import java.io.Serializable
 data class Comment(
     var _id: String,
     var contents: String,
-    var voted_user: ArrayList<Any>,
+    var voted_user: Collection<UserModel>,
     var by: UserModel,
     var vote: Int,
     var createdAt: String

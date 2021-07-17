@@ -7,8 +7,8 @@ data class Post(
     var _id:String,
     var title:String,
     var contents: String,
-    var by: UserModel,
-    var comments: ArrayList<Any>,
+    var by: UserModel?,
+    var comments: ArrayList<Any>?,
     var createdAt: String
 
 )

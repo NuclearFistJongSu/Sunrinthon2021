@@ -40,7 +40,7 @@ class Main1Fragment :
 
         binding.recyclerMain1.adapter = adapter
 
-        binding.swipeMain1.setOnRefreshListener { viewModel.nextPage {  } }
+        binding.swipeMain1.setOnRefreshListener { viewModel.nextPage ({  },requireContext()) }
         viewModel.isLoaded.observe(viewLifecycleOwner) { isLoaded ->
             binding.swipeMain1.isRefreshing = !isLoaded
         }
@@ -56,7 +56,7 @@ class Main1Fragment :
                 }
             })
 
-        viewModel.nextPage {  }
+        viewModel.nextPage ({  },requireContext())
 
         return binding.root
     }

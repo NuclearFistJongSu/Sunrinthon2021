@@ -1,14 +1,15 @@
 package com.david0926.sunrinthon2021.network.post
 
+import android.content.Context
 import com.david0926.sunrinthon2021.data.auth.CommonResponse
 import com.david0926.sunrinthon2021.data.post.Post
 import com.david0926.sunrinthon2021.data.post.PostRequest
 import com.david0926.sunrinthon2021.network.RemoteDataSource
 import com.david0926.sunrinthon2021.network.RemoteDataSourceImpl
 
-class PostManager {
+class PostManager(context: Context) {
 
-    private val retrofitRemoteDataSource: RemoteDataSource = RemoteDataSourceImpl()
+    private val retrofitRemoteDataSource: RemoteDataSource = RemoteDataSourceImpl(context)
 
     fun uploadPost(postRequest: PostRequest, onResponse: (CommonResponse, Post?) -> Unit, onFailure: (Throwable) -> Unit) {
         retrofitRemoteDataSource.uploadPost(postRequest, onResponse, onFailure)

@@ -13,6 +13,6 @@ data class UserModel(
 )
 {
     companion object {
-        lateinit var nowUser: UserModel
+        var token: String = ""
     }
 }

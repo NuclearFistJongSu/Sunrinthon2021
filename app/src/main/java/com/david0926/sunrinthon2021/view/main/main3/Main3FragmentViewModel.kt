@@ -12,18 +12,10 @@ class Main3FragmentViewModel : ViewModel() {
 
     val counter = MutableLiveData(0)
 
-    val isExpert = MutableLiveData(UserModel.nowUser.isExpert)
-    val information = MutableLiveData(UserModel.nowUser.information)
-    val career = MutableLiveData(UserModel.nowUser.career)
-
     fun changeProfile(isExpert: Boolean?, information: String?, career: String?) {
         val authManager = AuthManager()
         authManager.updateUser(UserInfoRequest(isExpert, information, career), {
-            if(it.success) {
-                this.isExpert.value = isExpert
-                this.information.value = information
-                this.career.value = career
-            }
+
         }, {
 
         })

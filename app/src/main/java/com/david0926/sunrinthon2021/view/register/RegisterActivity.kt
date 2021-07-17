@@ -38,5 +38,9 @@ class RegisterActivity :
                     it.printStackTrace()
                 })
         }
+
+        binding.toolbarRegister.setNavigationOnClickListener {
+            finish()
+        }
     }
 }

@@ -132,7 +132,7 @@ object BindingOptions {
     fun bindPortfolio(view: ImageView?, id: String?) {
         if (id == null || id.isEmpty()) return
         Glide.with(view!!).load("https://sunrinthon.herokuapp.com/api/v1/post/$id/portfolio_image/")
-            .placeholder(R.drawable.app_logo).into(view)
+            .placeholder(R.drawable.stock).into(view)
     }
 
     @JvmStatic

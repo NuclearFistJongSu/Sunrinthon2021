@@ -40,49 +40,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/circleImageView2"
-                    android:layout_width="164dp"
-                    android:layout_height="164dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="256dp"
                     android:layout_marginTop="36dp"
-                    android:src="@drawable/app_logo"
-                    app:bindProfile="@{user._id}"
+                    android:src="@drawable/stock"
+                    app:bindPortfolio="@{user._id}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circleImageView1"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:layout_marginTop="16dp"
-                    android:fontFamily="@font/productb"
-                    android:text="@{user.username, default=`Username`}"
-                    android:textColor="@color/materialDarkBlack"
-                    android:textSize="32sp"
-                    app:layout_constraintEnd_toStartOf="@id/textView8"
+                    android:src="@drawable/app_logo"
+                    app:bindProfile="@{user._id}"
+                    app:layout_constraintEnd_toStartOf="@id/textView11"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/circleImageView2" />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:fontFamily="@font/productb"
+                    android:text="@{user.username, default=`Username`}"
+                    android:textColor="@color/materialDarkBlack"
+                    android:textSize="32sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/circleImageView1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/circleImageView1"
+                    app:layout_constraintTop_toTopOf="@+id/circleImageView1" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/round_box"
                     android:backgroundTint="@color/colorPrimary"
                     android:fontFamily="@font/productb"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="4dp"
+                    android:layout_marginTop="8dp"
                     android:text="Expert"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:visibility="@{user.expert}"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView11"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView11"
-                    app:layout_constraintTop_toTopOf="@+id/textView11" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/circleImageView1" />
 
                 <TextView
                     android:id="@+id/textView12"
@@ -99,7 +110,7 @@
                     android:visibility="@{user.expert}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btn_main3_expert"
@@ -186,14 +197,14 @@
                     android:padding="24dp"
                     android:text="@{user.information}"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toTopOf="@+id/btn_register_register"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_main3_edit"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/btn_main3_expert"
                     app:layout_constraintVertical_bias="0" />
 
                 <Button
-                    android:id="@+id/btn_register_register"
+                    android:id="@+id/btn_main3_edit"
                     style="@style/ButtonStyleColored"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -12,7 +12,7 @@ import com.david0926.sunrinthon2021.network.post.PostManager
 class Main1FragmentViewModel : ViewModel() {
 
     var hasNext = true; // 잘 됐을지 안됐을지 전혀 모르겠습니다!!
-    var page = 0
+    var page = 1
 
     val PostList = ObservableArrayList<Post>()
     val AmountPerPage = Int.MAX_VALUE; //  한 페이지당 보일 갯수
@@ -49,7 +49,7 @@ class Main1FragmentViewModel : ViewModel() {
 
     fun nextPage(finish: () -> Unit) {
         if(hasNext) {
-            getPostFromRepo(++page)
+            getPostFromRepo(page)
             if(hasNext) {
                 finish()
             }

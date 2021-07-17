@@ -36,11 +36,11 @@ class Main1Fragment :
 //            startActivity(articleIntent)
         }
 
-        viewModel.nextPage {  }
+
 
         binding.recyclerMain1.adapter = adapter
 
-        binding.swipeMain1.setOnRefreshListener { onResume() }
+        binding.swipeMain1.setOnRefreshListener { viewModel.nextPage {  } }
         viewModel.isLoaded.observe(viewLifecycleOwner) { isLoaded ->
             binding.swipeMain1.isRefreshing = !isLoaded
         }
@@ -56,14 +56,8 @@ class Main1Fragment :
                 }
             })
 
+        viewModel.nextPage {  }
+
         return binding.root
     }
-
-    override fun onResume() {
-        super.onResume()
-//        viewModel.hasNext = true
-//        viewModel.page = 0
-//        viewModel.nextPage{}
-    }
-
 }

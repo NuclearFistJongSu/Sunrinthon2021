@@ -17,9 +17,9 @@ class Main1FragmentViewModel : ViewModel() {
     val PostList = ObservableArrayList<Post>()
     val AmountPerPage = 5; //  한 페이지당 보일 갯수
 
-    private fun getPostFromRepo(limit: Int = AmountPerPage, page: Int) {
+    private fun getPostFromRepo(page: Int) {
         val postManager = PostManager()
-        postManager.getPosts(limit, page, {response, posts ->
+        postManager.getPosts(AmountPerPage, page, {response, posts ->
             if(response.success) {
                 if(page == 0)
                     PostList.clear()
@@ -37,7 +37,7 @@ class Main1FragmentViewModel : ViewModel() {
         })
     }
 
-    fun nextPage(finish: () ->) {
+    fun nextPage(finish: () -> Unit) {
         if(hasNext) {
             getPostFromRepo(++page)
             if(hasNext) {

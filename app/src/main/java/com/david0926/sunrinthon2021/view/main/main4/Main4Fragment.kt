@@ -1,5 +1,6 @@
 package com.david0926.sunrinthon2021.view.main.main4
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.david0926.sunrinthon2021.R
 import com.david0926.sunrinthon2021.databinding.FragmentMain1Binding
 import com.david0926.sunrinthon2021.databinding.FragmentMain4Binding
+import com.david0926.sunrinthon2021.util.UserCache
 import com.david0926.sunrinthon2021.view.base.MvvmFragment
+import com.david0926.sunrinthon2021.view.login.LoginActivity
 import com.david0926.sunrinthon2021.view.main.main3.Main3FragmentViewModel
 
 class Main4Fragment :
@@ -23,8 +26,10 @@ class Main4Fragment :
         viewModel = ViewModelProvider(this).get(Main4FragmentViewModel::class.java)
         binding.viewModel = viewModel
 
-        binding.btnClick.setOnClickListener {
-            viewModel.addCounter()
+        binding.btnLogout.setOnClickListener {
+            UserCache.clearUser(requireContext())
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            requireActivity().finish()
         }
 
         return binding.root

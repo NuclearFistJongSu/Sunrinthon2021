@@ -6,11 +6,10 @@ import com.david0926.sunrinthon2021.data.UserModel
 import com.david0926.sunrinthon2021.data.auth.UserInfoRequest
 import com.david0926.sunrinthon2021.network.StockerRetrofit
 import com.david0926.sunrinthon2021.network.auth.AuthManager
+import com.david0926.sunrinthon2021.util.UserCache
 
 
 class Main3FragmentViewModel : ViewModel() {
-
-    val counter = MutableLiveData(0)
 
     fun changeProfile(isExpert: Boolean?, information: String?, career: String?) {
         val authManager = AuthManager()
@@ -22,8 +21,4 @@ class Main3FragmentViewModel : ViewModel() {
 
     }
 
-
-    fun addCounter(){
-        counter.value = counter.value!!+1
-    }
 }

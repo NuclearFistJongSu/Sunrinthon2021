@@ -22,7 +22,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
             var state = SharedPreferenceUtil.getString(this, "state", "on_board")
 
             // TODO: debug - remove this line to show onboard screen once
-            state = "on_board"
+            //state = "on_board"
 
             when (state) {
                 "on_board" ->

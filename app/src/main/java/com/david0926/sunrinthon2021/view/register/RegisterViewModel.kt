@@ -10,8 +10,6 @@ class RegisterViewModel : ViewModel(){
     val pw = MutableLiveData("")
     val term = MutableLiveData(false)
 
-    val btnEnabled = MutableLiveData(false)
-
     val errorMsg = MutableLiveData("")
 
 

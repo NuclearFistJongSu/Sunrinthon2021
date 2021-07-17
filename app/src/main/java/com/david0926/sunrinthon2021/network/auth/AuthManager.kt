@@ -1,10 +1,7 @@
 package com.david0926.sunrinthon2021.network.auth
 
 import com.david0926.sunrinthon2021.data.UserModel
-import com.david0926.sunrinthon2021.data.auth.CommonResponse
-import com.david0926.sunrinthon2021.data.auth.LoginRequest
-import com.david0926.sunrinthon2021.data.auth.RegisterRequest
-import com.david0926.sunrinthon2021.data.auth.UserInfoRequest
+import com.david0926.sunrinthon2021.data.auth.*
 import com.david0926.sunrinthon2021.network.RemoteDataSource
 import com.david0926.sunrinthon2021.network.RemoteDataSourceImpl
 import okhttp3.MultipartBody
@@ -21,7 +18,7 @@ class AuthManager {
         retrofitRemoteDataSource.register(registerRequest, onResponse, onFailure);
     }
 
-    fun getUser(token: String, onResponse: (CommonResponse, UserModel?) -> Unit, onFailure: (Throwable) -> Unit) {
+    fun getUser(token: String, onResponse: (CommonResponse, User?) -> Unit, onFailure: (Throwable) -> Unit) {
         retrofitRemoteDataSource.getuser(token, onResponse, onFailure);
     }
 

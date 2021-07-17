@@ -1,12 +1,13 @@
 package com.david0926.sunrinthon2021.network
 
+import android.util.Log
 import com.david0926.sunrinthon2021.data.UserModel
-import com.david0926.sunrinthon2021.data.auth.CommonResponse
-import com.david0926.sunrinthon2021.data.auth.LoginRequest
-import com.david0926.sunrinthon2021.data.auth.RegisterRequest
-import com.david0926.sunrinthon2021.data.auth.UserInfoRequest
+import com.david0926.sunrinthon2021.data.auth.*
+import com.david0926.sunrinthon2021.data.post.Post
+import com.david0926.sunrinthon2021.data.post.PostRequest
 import com.david0926.sunrinthon2021.network.auth.AuthManager
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -73,8 +74,8 @@ class RemoteDataSourceImpl : RemoteDataSource {
                     println(response.body()!!)
                     UserModel.nowUser.token = response.body()!!.data.toString()
                     getuser(response.body()!!.data.toString(), { response, usermodel ->
-                        UserModel.nowUser = usermodel!!
-                        onResponse(response, usermodel)
+                        UserModel.nowUser = usermodel!!.user!!
+                        onResponse(response, usermodel!!.user)
                     }, {
                         onFailure(it)
                     })
@@ -85,7 +86,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
 
     override fun getuser(
         Authorization: String,
-        onResponse: (CommonResponse, UserModel?) -> Unit,
+        onResponse: (CommonResponse, User?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
         StockerRetrofit.authService.getUser("Bearer $Authorization").enqueue(object: Callback<CommonResponse> {
@@ -105,9 +106,9 @@ class RemoteDataSourceImpl : RemoteDataSource {
                     )
                 } else {
                     println(response.body()!!)
-                    val user: UserModel = Gson().fromJson(
+                    val user: User = Gson().fromJson(
                         Gson().toJson(response.body()!!.data),
-                        UserModel::class.java
+                        User::class.java
                     )
                     onResponse(response.body()!!, user)
                 }
@@ -120,7 +121,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        StockerRetrofit.authService.updateUser(UserModel.nowUser.token, toPart(userInfoRequest.isExpert), toPart(userInfoRequest.information), toPart(userInfoRequest.career)).enqueue(object: Callback<CommonResponse> {
+        StockerRetrofit.authService.updateUser("Bearer $UserModel.nowUser.token", toPart(userInfoRequest.isExpert), toPart(userInfoRequest.information), toPart(userInfoRequest.career)).enqueue(object: Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }
@@ -172,7 +173,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        StockerRetrofit.authService.updateProfilePhoto(UserModel.nowUser.token, image).enqueue(object: Callback<CommonResponse> {
+        StockerRetrofit.authService.updateProfilePhoto("Bearer $UserModel.nowUser.token", image).enqueue(object: Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }
@@ -225,7 +226,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        StockerRetrofit.authService.updatePortfolioImage(UserModel.nowUser.token, image).enqueue(object: Callback<CommonResponse> {
+        StockerRetrofit.authService.updatePortfolioImage("Bearer $UserModel.nowUser.token", image).enqueue(object: Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }
@@ -246,5 +247,198 @@ class RemoteDataSourceImpl : RemoteDataSource {
         })
     }
 
+    override fun uploadPost(
+        postRequest: PostRequest,
+        onResponse: (CommonResponse, Post?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        StockerRetrofit.postService.uploadPost("Bearer $UserModel.nowUser.token", postRequest).enqueue(object: Callback<CommonResponse> {
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onFailure(t)
+            }
+
+            override fun onResponse(
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
+            ) {
+                if (response.body() == null) {
+                    onResponse(
+                        Gson().fromJson(
+                            response.errorBody()!!.string(),
+                            CommonResponse::class.java
+                        ), null
+                    )
+                } else {
+                    val post: Post = Gson().fromJson(
+                        Gson().toJson(response.body()!!.data),
+                        Post::class.java
+                    )
+                    onResponse(response.body()!!, post)
+                }
+            }
+        })
+    }
+
+    override fun getPosts(
+        limit: Int,
+        page: Int,
+        onResponse: (CommonResponse, ArrayList<Post>?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        StockerRetrofit.postService.getPosts(limit,page).enqueue(object: Callback<CommonResponse> {
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onFailure(t)
+            }
+
+            override fun onResponse(
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
+            ) {
+                try {
+                    if (response.body() == null) {
+                        onResponse(
+                            Gson().fromJson(
+                                response.errorBody()!!.string(),
+                                CommonResponse::class.java
+                            ), null
+                        )
+                    } else {
+                        val type = object : TypeToken<ArrayList<Post>>() {}.type
+                        val posts: ArrayList<Post> = Gson().fromJson(
+                            Gson().toJson(response.body()!!.data), type
+                        )
+                        onResponse(response.body()!!, posts)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+        })
+    }
+
+    override fun getPost(
+        _id: String,
+        onResponse: (CommonResponse, Post?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        StockerRetrofit.postService.getPost(_id).enqueue(object: Callback<CommonResponse> {
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onFailure(t)
+            }
+
+            override fun onResponse(
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
+            ) {
+                if(response.body() == null) {
+                    onResponse(
+                        Gson().fromJson(response.errorBody()!!.string(),
+                            CommonResponse::class.java),
+                        null
+                    )
+                } else {
+                    println(response.body()!!)
+                    val post: Post = Gson().fromJson(
+                        Gson().toJson(response.body()!!.data),
+                        Post::class.java
+                    )
+                    onResponse(response.body()!!, post)
+                }
+            }
+        })
+    }
+
+    override fun getPostPortfolioImage(
+        _id: String,
+        onResponse: (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        StockerRetrofit.postService.getPost(_id).enqueue(object: Callback<CommonResponse> {
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onFailure(t)
+            }
+
+            override fun onResponse(
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
+            ) {
+                if(response == null) {
+                    onResponse(
+                        Gson().fromJson(response.errorBody()!!.string(),
+                            CommonResponse::class.java)
+                    )
+                } else {
+                    onResponse(response.body()!!)
+                }
+            }
+        })
+    }
+
+    override fun addComment(
+        _id: String,
+        contents: String,
+        onResponse: (CommonResponse, Post?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        StockerRetrofit.postService.addComment(_id, "Bearer $UserModel.nowUser.token", contents).enqueue(object: Callback<CommonResponse> {
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onFailure(t)
+            }
+
+            override fun onResponse(
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
+            ) {
+                if (response.body() == null) {
+                    onResponse(
+                        Gson().fromJson(
+                            response.errorBody()!!.string(),
+                            CommonResponse::class.java
+                        ), null
+                    )
+                } else {
+                    val post: Post = Gson().fromJson(
+                        Gson().toJson(response.body()!!.data),
+                        Post::class.java
+                    )
+                    onResponse(response.body()!!, post)
+                }
+            }
+        })
+    }
+
+    override fun voteComment(
+        _id: String,
+        comment_id: String,
+        onResponse: (CommonResponse, Post?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        StockerRetrofit.postService.voteComment(_id, comment_id, "Bearer ${UserModel.nowUser.token}").enqueue(object : Callback<CommonResponse> {
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onFailure(t)
+            }
+
+            override fun onResponse(
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
+            ) {
+                if (response.body() == null) {
+                       onResponse(
+                           Gson().fromJson(
+                               response.errorBody()!!.string(),
+                               CommonResponse::class.java
+                           ), null
+                       )
+                   } else {
+                        val post: Post = Gson().fromJson(
+                            Gson().toJson(response.body()!!.data),
+                            Post::class.java
+                        )
+                    onResponse(response.body()!!, post)
+                }
+            }
+        })
+    }
 
 }

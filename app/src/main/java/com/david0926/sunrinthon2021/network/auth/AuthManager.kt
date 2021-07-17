@@ -7,6 +7,7 @@ import com.david0926.sunrinthon2021.data.auth.RegisterRequest
 import com.david0926.sunrinthon2021.data.auth.UserInfoRequest
 import com.david0926.sunrinthon2021.network.RemoteDataSource
 import com.david0926.sunrinthon2021.network.RemoteDataSourceImpl
+import okhttp3.MultipartBody
 
 class AuthManager {
     private val retrofitRemoteDataSource: RemoteDataSource = RemoteDataSourceImpl()
@@ -31,5 +32,14 @@ class AuthManager {
     fun getProfilePhoto(_id: String, onResponse: (CommonResponse) -> Unit, onFailure: (Throwable) -> Unit) {
         retrofitRemoteDataSource.getProfilePhoto(_id, onResponse, onFailure)
     }
+    fun updateProfilePhoto(image: MultipartBody.Part, onResponse: (CommonResponse) -> Unit, onFailure: (Throwable) -> Unit) {
+        retrofitRemoteDataSource.updateProfilePhoto(image, onResponse, onFailure)
+    }
 
+    fun getPortfolioImage(_id: String, onResponse: (CommonResponse) -> Unit, onFailure: (Throwable) -> Unit) {
+        retrofitRemoteDataSource.getPortfolioImage(_id, onResponse, onFailure)
+    }
+    fun updatePortfolioImage(image: MultipartBody.Part, onResponse: (CommonResponse) -> Unit, onFailure: (Throwable) -> Unit) {
+        retrofitRemoteDataSource.updatePortfolioImage(image, onResponse, onFailure)
+    }
 }

@@ -5,6 +5,8 @@ import com.david0926.sunrinthon2021.data.auth.CommonResponse
 import com.david0926.sunrinthon2021.data.auth.LoginRequest
 import com.david0926.sunrinthon2021.data.auth.RegisterRequest
 import com.david0926.sunrinthon2021.data.auth.UserInfoRequest
+import okhttp3.MultipartBody
+import retrofit2.http.Multipart
 
 interface RemoteDataSource {
 
@@ -34,6 +36,24 @@ interface RemoteDataSource {
 
     fun getProfilePhoto(
         _id: String,
+        onResponse: (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    fun updateProfilePhoto(
+        image: MultipartBody.Part,
+        onResponse: (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    fun getPortfolioImage(
+        _id: String,
+        onResponse: (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    fun updatePortfolioImage(
+        image: MultipartBody.Part,
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     )

@@ -8,6 +8,7 @@ import com.david0926.sunrinthon2021.data.auth.UserInfoRequest
 import com.david0926.sunrinthon2021.network.auth.AuthManager
 import com.google.gson.Gson
 import okhttp3.MediaType
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -146,6 +147,85 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onFailure: (Throwable) -> Unit
     ) {
         StockerRetrofit.authService.getProfilePhoto(_id).enqueue(object: Callback<CommonResponse> {
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onFailure(t)
+            }
+
+            override fun onResponse(
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
+            ) {
+                if(response == null) {
+                    onResponse(
+                        Gson().fromJson(response.errorBody()!!.string(),
+                            CommonResponse::class.java)
+                    )
+                } else {
+                    onResponse(response.body()!!)
+                }
+            }
+        })
+    }
+
+    override fun updateProfilePhoto(
+        image: MultipartBody.Part,
+        onResponse: (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        StockerRetrofit.authService.updateProfilePhoto(UserModel.nowUser.token, image).enqueue(object: Callback<CommonResponse> {
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onFailure(t)
+            }
+
+            override fun onResponse(
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
+            ) {
+                if(response == null) {
+                    onResponse(
+                        Gson().fromJson(response.errorBody()!!.string(),
+                            CommonResponse::class.java)
+                    )
+                } else {
+                    onResponse(response.body()!!)
+                }
+            }
+        })
+    }
+
+
+    override fun getPortfolioImage(
+        _id: String,
+        onResponse: (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        StockerRetrofit.authService.getPortfolioImage(_id).enqueue(object: Callback<CommonResponse> {
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onFailure(t)
+            }
+
+            override fun onResponse(
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
+            ) {
+                if(response == null) {
+                    onResponse(
+                        Gson().fromJson(response.errorBody()!!.string(),
+                            CommonResponse::class.java)
+                    )
+                } else {
+                    onResponse(response.body()!!)
+                }
+            }
+        })
+    }
+
+    override fun updatePortfolioImage(
+        image: MultipartBody.Part,
+        onResponse: (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        StockerRetrofit.authService.updatePortfolioImage(UserModel.nowUser.token, image).enqueue(object: Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }

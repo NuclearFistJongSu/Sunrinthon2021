@@ -22,6 +22,7 @@
             android:layout_height="0dp"
             android:animateLayoutChanges="true"
             android:animationCache="false"
+            app:bindFragment="@{viewModel.fragments.get(viewModel.page)}"
             app:layout_constraintBottom_toTopOf="@+id/bottomMain"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

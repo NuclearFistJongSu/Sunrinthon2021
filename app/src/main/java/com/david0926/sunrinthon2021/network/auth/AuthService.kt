@@ -44,7 +44,7 @@ interface AuthService {
     @Multipart
     fun updateProfilePhoto(
         @Header("Authorization") token:String,
-        @Part("image") image: MultipartBody.Part
+        @Part image: MultipartBody.Part
     ):Call<CommonResponse>
 
     @GET("/api/v1/user/{id}/portfolio_image")
@@ -56,6 +56,6 @@ interface AuthService {
     @Multipart
     fun updatePortfolioImage(
         @Header("Authorization") token:String,
-        @Part("image") image: MultipartBody.Part
+        @Part image: MultipartBody.Part
     ):Call<CommonResponse>
 }

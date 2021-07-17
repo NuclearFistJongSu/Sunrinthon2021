@@ -27,6 +27,7 @@ class Main3Fragment :
         binding.user = UserCache.getUser(requireContext())
 
         binding.btnMain3Edit.setOnClickListener {
+            println("EEE")
             startActivity(Intent(requireActivity(), EditProfileActivity::class.java))
         }
 

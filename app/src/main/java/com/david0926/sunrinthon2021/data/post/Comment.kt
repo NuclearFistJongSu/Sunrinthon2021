@@ -1,6 +1,7 @@
 package com.david0926.sunrinthon2021.data.post
 
 import com.david0926.sunrinthon2021.data.UserModel
+import java.io.Serializable
 
 data class Comment(
     var _id: String,
@@ -9,4 +10,4 @@ data class Comment(
     var by: UserModel,
     var vote: Int,
     var createdAt: String
-)
+):Serializable

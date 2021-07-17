@@ -1,5 +1,6 @@
 package com.david0926.sunrinthon2021.view.main.main1
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.david0926.sunrinthon2021.R
 import com.david0926.sunrinthon2021.databinding.FragmentMain1Binding
 import com.david0926.sunrinthon2021.util.UserCache
+import com.david0926.sunrinthon2021.view.article.ArticleActivity
 import com.david0926.sunrinthon2021.view.base.MvvmFragment
 
 class Main1Fragment :
@@ -30,10 +32,10 @@ class Main1Fragment :
 
         val adapter = Main1RecyclerAdapter(UserCache.getUser(requireContext()))
         adapter.onItemClick = {
-//            val articleIntent = Intent(requireContext(), ArticleActivity::class.java)
-//            articleIntent.putExtra("post", viewModel.privatePostList[it])
-//            articleIntent.putExtra("user", UserCache.getUser(requireContext()))
-//            startActivity(articleIntent)
+            val articleIntent = Intent(requireContext(), ArticleActivity::class.java)
+            articleIntent.putExtra("post", viewModel.PostList[it-1])
+            articleIntent.putExtra("user", UserCache.getUser(requireContext()))
+            startActivity(articleIntent)
         }
 
 

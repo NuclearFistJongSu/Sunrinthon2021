@@ -15,8 +15,8 @@ interface PostService {
 
     @GET("/api/v1/post")
     fun getPosts(
-        @Query("limit") limit: Int,
-        @Query("page") page: Int
+        @Query("limit") limit: Int?,
+        @Query("page") page: Int?
     ): Call<CommonResponse>
 
     @GET("/api/v1/post/{id}")

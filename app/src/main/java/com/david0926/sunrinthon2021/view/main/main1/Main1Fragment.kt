@@ -36,19 +36,7 @@ class Main1Fragment :
 //            startActivity(articleIntent)
         }
 
-        binding.recyclerMain1.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val lm = (recyclerView.layoutManager as LinearLayoutManager?)
-                val visibleItemCount = lm!!.childCount
-                val totalItemCount = lm.itemCount
-                val firstVisibleItemPosition = lm.findFirstVisibleItemPosition()
-
-                if ((visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0)) {
-                    viewModel.nextPage {}
-                }
-            }
-        })
+        viewModel.nextPage {  }
 
         binding.recyclerMain1.adapter = adapter
 
@@ -73,9 +61,9 @@ class Main1Fragment :
 
     override fun onResume() {
         super.onResume()
-        viewModel.hasNext = true
-        viewModel.page = 0
-        viewModel.nextPage{}
+//        viewModel.hasNext = true
+//        viewModel.page = 0
+//        viewModel.nextPage{}
     }
 
 }

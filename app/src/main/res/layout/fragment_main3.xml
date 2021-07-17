@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -42,12 +41,12 @@
                 android:layout_height="wrap_content">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    app:bindProfile="@{user._id}"
                     android:id="@+id/circleImageView2"
                     android:layout_width="164dp"
                     android:layout_height="164dp"
                     android:layout_marginTop="36dp"
                     android:src="@drawable/app_logo"
+                    app:bindProfile="@{user._id}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +60,8 @@
                     android:text="@{user.username, default=`Username`}"
                     android:textColor="@color/materialDarkBlack"
                     android:textSize="32sp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/textView8"
+                    app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/circleImageView2" />
 
@@ -69,49 +69,140 @@
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/round_box"
                     android:backgroundTint="@color/colorPrimary"
                     android:fontFamily="@font/productb"
-                    android:paddingHorizontal="16dp"
+                    android:paddingHorizontal="12dp"
                     android:paddingVertical="4dp"
                     android:text="Expert"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:visibility="@{user.expert}"
-                    app:layout_constraintEnd_toEndOf="@+id/circleImageView2"
-                    app:layout_constraintStart_toStartOf="@+id/circleImageView2"
-                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
+                    app:layout_constraintBottom_toBottomOf="@+id/textView11"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView11"
+                    app:layout_constraintTop_toTopOf="@+id/textView11" />
 
                 <TextView
-                    android:visibility="@{user.expert}"
-                    android:fontFamily="@font/regular"
                     android:id="@+id/textView12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="24dp"
                     android:background="@drawable/round_box"
                     android:backgroundTint="@color/colorPrimary"
-                    android:padding="24dp"
-                    android:textColor="@color/white"
-                    android:text="@{user.career}"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8"
-                    tools:layout_editor_absoluteX="24dp" />
-
-                <TextView
                     android:fontFamily="@font/regular"
+                    android:padding="24dp"
+                    android:text="@{user.career}"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:visibility="@{user.expert}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btn_main3_expert"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
                     android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/round_box"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:elevation="8dp"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView12">
+
+                    <ImageView
+                        android:id="@+id/img_main4_info"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:src="@drawable/undraw_certificate_343v"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txt_main4_info1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/productb"
+                        android:text="Are you an expert?"
+                        android:textColor="@android:color/white"
+                        android:textSize="24sp"
+                        app:layout_constrainedWidth="true"
+                        app:layout_constraintBottom_toTopOf="@+id/txt_main4_info2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/img_main4_info"
+                        app:layout_constraintTop_toTopOf="@+id/img_main4_info"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <TextView
+                        android:id="@+id/txt_main4_info2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/productr"
+                        android:text="Get advanced profile and \nchance to make new clients."
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        app:layout_constrainedWidth="true"
+                        app:layout_constraintBottom_toBottomOf="@+id/img_main4_info"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/txt_main4_info1"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_main4_info1" />
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_navigate_next_black_24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/white" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/round_box"
                     android:backgroundTint="@color/materialGray1"
+                    android:fontFamily="@font/regular"
                     android:padding="24dp"
                     android:text="@{user.information}"
                     android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12"
-                    />
+                    app:layout_constraintBottom_toTopOf="@+id/btn_register_register"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_main3_expert"
+                    app:layout_constraintVertical_bias="0" />
+
+                <Button
+                    android:id="@+id/btn_register_register"
+                    style="@style/ButtonStyleColored"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="24dp"
+                    android:padding="4dp"
+                    android:text="Edit profile"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

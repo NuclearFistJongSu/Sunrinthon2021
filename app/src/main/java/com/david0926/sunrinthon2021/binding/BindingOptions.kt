@@ -3,6 +3,7 @@ package com.david0926.sunrinthon2021.binding
 import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -12,6 +13,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
@@ -120,14 +123,16 @@ object BindingOptions {
     @BindingAdapter("bindProfile")
     fun bindProfile(view: ImageView?, id: String?) {
         if (id == null || id.isEmpty()) return
-        Glide.with(view!!).load("https://sunrinthon.herokuapp.com/api/v1/user/$id/profile_image/").into(view)
+        Glide.with(view!!).load("https://sunrinthon.herokuapp.com/api/v1/user/$id/profile_image/")
+            .placeholder(R.drawable.app_logo).into(view)
     }
 
     @JvmStatic
     @BindingAdapter("bindPortfolio")
     fun bindPortfolio(view: ImageView?, id: String?) {
         if (id == null || id.isEmpty()) return
-        Glide.with(view!!).load("https://sunrinthon.herokuapp.com/api/v1/post/$id/portfolio_image/").into(view)
+        Glide.with(view!!).load("https://sunrinthon.herokuapp.com/api/v1/post/$id/portfolio_image/")
+            .placeholder(R.drawable.app_logo).into(view)
     }
 
     @JvmStatic

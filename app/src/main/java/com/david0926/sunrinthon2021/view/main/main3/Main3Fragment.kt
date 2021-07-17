@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.david0926.sunrinthon2021.R
 import com.david0926.sunrinthon2021.databinding.FragmentMain3Binding
+import com.david0926.sunrinthon2021.util.UserCache
 import com.david0926.sunrinthon2021.view.base.MvvmFragment
 
 class Main3Fragment :
@@ -20,6 +21,8 @@ class Main3Fragment :
         super.onCreateView(inflater, container, savedInstanceState)
         viewModel = ViewModelProvider(this).get(Main3FragmentViewModel::class.java)
         binding.viewModel = viewModel
+
+        binding.user = UserCache.getUser(requireContext())
 
         return binding.root
     }

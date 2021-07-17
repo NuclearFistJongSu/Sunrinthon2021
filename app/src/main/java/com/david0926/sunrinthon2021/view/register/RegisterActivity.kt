@@ -20,7 +20,7 @@ class RegisterActivity :
             val dialog = LoadingDialog(this)
             dialog.setMessage("Creating account...").show()
 
-            val authManager = AuthManager()
+            val authManager = AuthManager(this)
             authManager.register(
                 RegisterRequest(
                     viewModel.id.value!!,

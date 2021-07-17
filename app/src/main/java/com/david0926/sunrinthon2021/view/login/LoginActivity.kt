@@ -23,11 +23,11 @@ class LoginActivity : MvvmActivity<ActivityLoginBinding, LoginViewModel>(R.layou
             val dialog = LoadingDialog(this)
             dialog.setMessage("Signing in...").show()
 
-            val authManager = AuthManager()
+            val authManager = AuthManager(this)
             authManager.login(
                 LoginRequest(viewModel.id.value!!, viewModel.pw.value!!),
-                onResponse = { _, user ->
-                    UserCache.setUser(this, user)
+                onResponse = { _, user, token ->
+                    UserCache.setUser(this, user, token)
                     dialog.success("Success!", onSuccess = {
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()

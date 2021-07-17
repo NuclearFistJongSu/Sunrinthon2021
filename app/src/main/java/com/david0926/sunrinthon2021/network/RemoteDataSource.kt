@@ -17,7 +17,7 @@ interface RemoteDataSource {
 
     fun login(
         loginRequest: LoginRequest,
-        onResponse: (CommonResponse, UserModel?) -> Unit,
+        onResponse: (CommonResponse, UserModel?, String?) -> Unit,
         onFailure: (Throwable) -> Unit
     )
 

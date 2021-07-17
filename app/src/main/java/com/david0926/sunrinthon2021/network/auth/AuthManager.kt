@@ -1,16 +1,18 @@
 package com.david0926.sunrinthon2021.network.auth
 
+import android.content.Context
 import com.david0926.sunrinthon2021.data.UserModel
 import com.david0926.sunrinthon2021.data.auth.*
+import com.david0926.sunrinthon2021.data.post.Post
 import com.david0926.sunrinthon2021.network.RemoteDataSource
 import com.david0926.sunrinthon2021.network.RemoteDataSourceImpl
 import okhttp3.MultipartBody
 
-class AuthManager {
-    private val retrofitRemoteDataSource: RemoteDataSource = RemoteDataSourceImpl()
+class AuthManager(context: Context) {
+    private val retrofitRemoteDataSource: RemoteDataSource = RemoteDataSourceImpl(context)
 
 
-    fun login(loginRequest: LoginRequest, onResponse: (CommonResponse, UserModel?) -> Unit, onFailure: (Throwable) -> Unit) {
+    fun login(loginRequest: LoginRequest, onResponse: (CommonResponse, UserModel?, String?) -> Unit, onFailure: (Throwable) -> Unit) {
         retrofitRemoteDataSource.login(loginRequest, onResponse, onFailure);
     }
 

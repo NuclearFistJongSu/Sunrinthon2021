@@ -14,7 +14,7 @@ class PostManager {
         retrofitRemoteDataSource.uploadPost(postRequest, onResponse, onFailure)
     }
 
-    fun getPosts(limit: Int, page: Int, onResponse: (CommonResponse, ArrayList<Post>?) -> Unit, onFailure: (Throwable) -> Unit) {
+    fun getPosts(limit: Int?, page: Int?, onResponse: (CommonResponse, ArrayList<Post>?) -> Unit, onFailure: (Throwable) -> Unit) {
         retrofitRemoteDataSource.getPosts(limit, page, onResponse, onFailure)
     }
 

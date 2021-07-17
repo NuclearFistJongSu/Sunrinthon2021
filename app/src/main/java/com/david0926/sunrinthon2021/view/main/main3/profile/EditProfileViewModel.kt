@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 class EditProfileViewModel : ViewModel() {
 
     val profile: MutableLiveData<Uri> = MutableLiveData()
+    val portfolio: MutableLiveData<Uri> = MutableLiveData()
     val introduce = MutableLiveData("")
 
     val errorMsg = MutableLiveData("")

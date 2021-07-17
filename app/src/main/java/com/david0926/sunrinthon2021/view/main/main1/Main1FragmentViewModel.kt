@@ -15,7 +15,7 @@ class Main1FragmentViewModel : ViewModel() {
     var page = 0
 
     val PostList = ObservableArrayList<Post>()
-    val AmountPerPage = 5; //  한 페이지당 보일 갯수
+    val AmountPerPage = Int.MAX_VALUE; //  한 페이지당 보일 갯수
 
     val isLoaded = MutableLiveData(false)
 
@@ -35,13 +35,8 @@ class Main1FragmentViewModel : ViewModel() {
         postManager.getPosts(AmountPerPage, page, {response, posts ->
             isLoaded.value = true
             if(response.success) {
-                if(page == 0)
-                    PostList.clear()
-
-                if(posts!!.size != page)
-                    hasNext = false
-
                 PostList.addAll(posts!!)
+                PostList.reverse()
             } else {
                 hasNext = false
                 return@getPosts

@@ -64,8 +64,8 @@ interface RemoteDataSource {
     )
 
     fun getPosts(
-        limit: Int,
-        page: Int,
+        limit: Int?,
+        page: Int?,
         onResponse: (CommonResponse, ArrayList<Post>?) -> Unit,
         onFailure: (Throwable) -> Unit
     )

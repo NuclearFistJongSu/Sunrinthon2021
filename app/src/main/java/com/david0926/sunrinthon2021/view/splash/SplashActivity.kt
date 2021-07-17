@@ -3,12 +3,12 @@ package com.david0926.sunrinthon2021.view.splash
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.david0926.sunrinthon2021.R
 import com.david0926.sunrinthon2021.databinding.ActivitySplashBinding
 import com.david0926.sunrinthon2021.util.SharedPreferenceUtil
+import com.david0926.sunrinthon2021.util.UserCache
 import com.david0926.sunrinthon2021.view.base.BaseActivity
+import com.david0926.sunrinthon2021.view.login.LoginActivity
 import com.david0926.sunrinthon2021.view.main.MainActivity
 import com.david0926.sunrinthon2021.view.onboard.OnBoardActivity
 
@@ -28,13 +28,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
                 "on_board" ->
                     startActivity(Intent(this, OnBoardActivity::class.java))
                 else -> {
-//                    if (UserCache.getUser(this) == null)
-//                        startActivity(Intent(this, LoginActivity::class.java))
-//                    else startActivity(Intent(this, MainActivity::class.java))
-                    startActivity(Intent(this, MainActivity::class.java))
+                    if (UserCache.getUser(this) == null)
+                        startActivity(Intent(this, LoginActivity::class.java))
+                    else startActivity(Intent(this, MainActivity::class.java))
                 }
             }
-
             finish()
         }, 2000)
 

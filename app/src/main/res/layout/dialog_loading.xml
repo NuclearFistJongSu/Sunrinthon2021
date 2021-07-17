@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.david0926.sunrinthon2021.view.dialog.LoadingDialogViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/bgColorDefault"
+        android:paddingHorizontal="48dp"
+        android:paddingVertical="36dp">
+
+        <ProgressBar
+            android:id="@+id/progress_loading"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:indeterminateTint="@color/colorPrimary"
+            app:bindInvisibility="@{!viewModel.isSuccess}"
+            app:layout_constraintBottom_toTopOf="@id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_round_check_circle_outline_24"
+            app:bindInvisibility="@{viewModel.isSuccess}"
+            app:layout_constraintBottom_toBottomOf="@+id/progress_loading"
+            app:layout_constraintEnd_toEndOf="@+id/progress_loading"
+            app:layout_constraintStart_toStartOf="@+id/progress_loading"
+            app:layout_constraintTop_toTopOf="@+id/progress_loading"
+            app:tint="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/productb"
+            android:text="@{viewModel.msg, default=`Loading...`}"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:visibility="@{viewModel.msg.length()&gt;0}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progress_loading" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

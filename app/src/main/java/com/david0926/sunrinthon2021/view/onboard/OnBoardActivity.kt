@@ -7,6 +7,7 @@ import com.david0926.sunrinthon2021.R
 import com.david0926.sunrinthon2021.databinding.ActivityOnBoardBinding
 import com.david0926.sunrinthon2021.util.SharedPreferenceUtil
 import com.david0926.sunrinthon2021.view.base.MvvmActivity
+import com.david0926.sunrinthon2021.view.login.LoginActivity
 import com.david0926.sunrinthon2021.view.main.MainActivity
 
 class OnBoardActivity :
@@ -35,7 +36,7 @@ class OnBoardActivity :
 
     private fun finishOnBoard() {
         SharedPreferenceUtil.put(this@OnBoardActivity, "state", "login")
-        startActivity(Intent(this@OnBoardActivity, MainActivity::class.java))
+        startActivity(Intent(this@OnBoardActivity, LoginActivity::class.java))
         finish()
     }
 

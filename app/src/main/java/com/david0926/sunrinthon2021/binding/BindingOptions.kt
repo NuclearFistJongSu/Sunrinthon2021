@@ -84,12 +84,12 @@ object BindingOptions {
         v.setTextColor(
             ContextCompat.getColorStateList(
                 v.context,
-                if (enabled) R.color.white else R.color.colorPrimary
+                if (enabled) R.color.white else R.color.white
             )
         )
         v.backgroundTintList = ContextCompat.getColorStateList(
             v.context,
-            if (enabled) R.color.colorPrimary else R.color.materialGray6
+            if (enabled) R.color.colorPrimary else R.color.materialGray5
         )
     }
 

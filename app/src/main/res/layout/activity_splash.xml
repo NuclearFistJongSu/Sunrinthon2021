@@ -13,15 +13,31 @@
         tools:context=".ui.SplashActivity">
 
         <ImageView
-            app:tint="@color/colorPrimary"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@drawable/ic_outline_question_answer_24"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/app_logo_round"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.475" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/regular"
+            android:includeFontPadding="true"
+            android:text="© 2021. Sunrin Hackathon. Team Jongsu"
+            android:textColor="@color/materialGray5"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.945" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

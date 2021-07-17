@@ -10,7 +10,8 @@ data class UserModel(
     var isExpert: Boolean,
     var information: String,
     var career: String
-) {
+)
+{
     companion object {
         lateinit var nowUser: UserModel
     }

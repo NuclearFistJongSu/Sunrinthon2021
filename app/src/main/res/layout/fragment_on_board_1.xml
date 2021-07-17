@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:lineSpacingExtra="5sp"
-        android:text="There are 100,000+ investing experts in \nStocker waiting for you."
+        android:text="There are 100,000+ investing experts in \nStocker® waiting for you."
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constrainedWidth="true"

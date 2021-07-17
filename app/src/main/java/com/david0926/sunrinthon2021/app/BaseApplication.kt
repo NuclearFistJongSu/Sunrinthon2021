@@ -1,4 +1,4 @@
-package com.david0926.sunrinthon2021
+package com.david0926.sunrinthon2021.app
 
 import android.app.Application
 

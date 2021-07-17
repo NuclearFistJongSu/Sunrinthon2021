@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sunrinthon2021"
         tools:ignore="LockedOrientationActivity">
+        <activity android:name=".view.article.ArticleActivity"></activity>
         <activity
             android:name=".view.main.main3.profile.EditProfileActivity"
             android:screenOrientation="portrait" />

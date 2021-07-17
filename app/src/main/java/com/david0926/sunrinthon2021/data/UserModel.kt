@@ -1,5 +1,7 @@
 package com.david0926.sunrinthon2021.data
 
+import java.io.Serializable
+
 data class UserModel(
     var _id: String,
     var token: String,
@@ -10,7 +12,7 @@ data class UserModel(
     var isExpert: Boolean,
     var information: String,
     var career: String
-)
+):Serializable
 {
 
     companion object {

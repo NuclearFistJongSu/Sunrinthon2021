@@ -23,8 +23,8 @@ class Main1FragmentViewModel : ViewModel() {
 
     companion object {
         @JvmStatic
-        @BindingAdapter("bindPosts")
-        fun bindPosts(r: RecyclerView, posts: ObservableArrayList<Post>?) {
+        @BindingAdapter("bindPosts1")
+        fun bindPosts1(r: RecyclerView, posts: ObservableArrayList<Post>?) {
             val adapter: Main1RecyclerAdapter? = r.adapter as Main1RecyclerAdapter?
             if (adapter == null || posts == null) return
             adapter.setPosts(posts)

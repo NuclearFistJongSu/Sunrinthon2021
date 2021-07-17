@@ -166,13 +166,13 @@
                         android:textSize="16sp"
                         app:layout_constrainedWidth="true"
                         app:layout_constraintBottom_toBottomOf="@+id/img_main4_info"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_article_comment"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/txt_main4_info1"
                         app:layout_constraintTop_toBottomOf="@+id/txt_main4_info1" />
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/btn_article_comment"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/ic_navigate_next_black_24dp"

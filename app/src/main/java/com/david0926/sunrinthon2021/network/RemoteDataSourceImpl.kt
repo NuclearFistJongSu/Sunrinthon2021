@@ -99,17 +99,22 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 response: Response<CommonResponse>
             ) {
                 if(response.body() == null) {
-                    onResponse(
-                        Gson().fromJson(response.errorBody()!!.string(),
-                            CommonResponse::class.java),
-                        null
-                    )
+//                    onResponse(
+//                        Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java),
+//                        null
+//                    )
+
+                    onFailure(Throwable(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java).message))
                 } else {
                     println(response.body()!!)
                     val user: User = Gson().fromJson(
                         Gson().toJson(response.body()!!.data),
                         User::class.java
                     )
+                    if(user == null) {
+                        onFailure(Throwable(response.body()!!.message))
+                        return;
+                    }
                     onResponse(response.body()!!, user)
                 }
             }
@@ -262,17 +267,23 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 response: Response<CommonResponse>
             ) {
                 if (response.body() == null) {
-                    onResponse(
-                        Gson().fromJson(
-                            response.errorBody()!!.string(),
-                            CommonResponse::class.java
-                        ), null
-                    )
+//                    onResponse(
+//                        Gson().fromJson(
+//                            response.errorBody()!!.string(),
+//                            CommonResponse::class.java
+//                        ), null
+//                    )
+                    onFailure(Throwable(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java).message))
+
                 } else {
                     val post: Post = Gson().fromJson(
                         Gson().toJson(response.body()!!.data),
                         Post::class.java
                     )
+                    if(post == null) {
+                        onFailure(Throwable(response.body()!!.message))
+                        return;
+                    }
                     onResponse(response.body()!!, post)
                 }
             }
@@ -296,17 +307,24 @@ class RemoteDataSourceImpl : RemoteDataSource {
             ) {
                 try {
                     if (response.body() == null) {
-                        onResponse(
-                            Gson().fromJson(
-                                response.errorBody()!!.string(),
-                                CommonResponse::class.java
-                            ), null
-                        )
+//                        onResponse(
+//                            Gson().fromJson(
+//                                response.errorBody()!!.string(),
+//                                CommonResponse::class.java
+//                            ), null
+//                        )
+                        onFailure(Throwable(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java).message))
                     } else {
                         val type = object : TypeToken<ArrayList<Post>>() {}.type
                         val posts: ArrayList<Post> = Gson().fromJson(
                             Gson().toJson(response.body()!!.data), type
                         )
+
+                        if(posts == null) {
+                            onFailure(Throwable(response.body()!!.message))
+                            return;
+                        }
+
                         onResponse(response.body()!!, posts)
                     }
                 } catch (e: Exception) {
@@ -332,17 +350,24 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 response: Response<CommonResponse>
             ) {
                 if(response.body() == null) {
-                    onResponse(
-                        Gson().fromJson(response.errorBody()!!.string(),
-                            CommonResponse::class.java),
-                        null
-                    )
+//                    onResponse(
+//                        Gson().fromJson(response.errorBody()!!.string(),
+//                            CommonResponse::class.java),
+//                        null
+//                    )
+                    onFailure(Throwable(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java).message))
                 } else {
                     println(response.body()!!)
                     val post: Post = Gson().fromJson(
                         Gson().toJson(response.body()!!.data),
                         Post::class.java
                     )
+
+                    if(post == null) {
+                        onFailure(Throwable(response.body()!!.message))
+                        return;
+                    }
+
                     onResponse(response.body()!!, post)
                 }
             }
@@ -391,17 +416,23 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 response: Response<CommonResponse>
             ) {
                 if (response.body() == null) {
-                    onResponse(
-                        Gson().fromJson(
-                            response.errorBody()!!.string(),
-                            CommonResponse::class.java
-                        ), null
-                    )
+//                    onResponse(
+//                        Gson().fromJson(
+//                            response.errorBody()!!.string(),
+//                            CommonResponse::class.java
+//                        ), null
+//                    )
+                    onFailure(Throwable(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java).message))
+
                 } else {
                     val post: Post = Gson().fromJson(
                         Gson().toJson(response.body()!!.data),
                         Post::class.java
                     )
+                    if(post == null) {
+                        onFailure(Throwable(response.body()!!.message))
+                        return;
+                    }
                     onResponse(response.body()!!, post)
                 }
             }
@@ -424,17 +455,22 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 response: Response<CommonResponse>
             ) {
                 if (response.body() == null) {
-                       onResponse(
-                           Gson().fromJson(
-                               response.errorBody()!!.string(),
-                               CommonResponse::class.java
-                           ), null
-                       )
+//                       onResponse(
+//                           Gson().fromJson(
+//                               response.errorBody()!!.string(),
+//                               CommonResponse::class.java
+//                           ), null
+//                       )
+                    onFailure(Throwable(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java).message))
                    } else {
                         val post: Post = Gson().fromJson(
                             Gson().toJson(response.body()!!.data),
                             Post::class.java
                         )
+                    if(post == null) {
+                        onFailure(Throwable(response.body()!!.message))
+                        return;
+                    }
                     onResponse(response.body()!!, post)
                 }
             }

@@ -21,10 +21,6 @@ class Main3Fragment :
         viewModel = ViewModelProvider(this).get(Main3FragmentViewModel::class.java)
         binding.viewModel = viewModel
 
-        binding.btnClick.setOnClickListener {
-            viewModel.addCounter()
-        }
-
         return binding.root
     }
 

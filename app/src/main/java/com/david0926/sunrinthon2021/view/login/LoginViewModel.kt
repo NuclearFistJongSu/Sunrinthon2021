@@ -8,8 +8,6 @@ class LoginViewModel : ViewModel(){
     val id = MutableLiveData("")
     val pw = MutableLiveData("")
 
-    val btnEnabled = MutableLiveData(false)
-
     val errorMsg = MutableLiveData("")
 
 

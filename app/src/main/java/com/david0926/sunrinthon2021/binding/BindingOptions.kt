@@ -117,13 +117,28 @@ object BindingOptions {
     }
 
     @JvmStatic
+    @BindingAdapter("bindProfile")
+    fun bindProfile(view: ImageView?, id: String?) {
+        if (id == null || id.isEmpty()) return
+        Glide.with(view!!).load("https://sunrinthon.herokuapp.com/api/v1/user/$id/profile_image/").into(view)
+    }
+
+    @JvmStatic
+    @BindingAdapter("bindPortfolio")
+    fun bindPortfolio(view: ImageView?, id: String?) {
+        if (id == null || id.isEmpty()) return
+        Glide.with(view!!).load("https://sunrinthon.herokuapp.com/api/v1/post/$id/portfolio_image/").into(view)
+    }
+
+    @JvmStatic
     @BindingAdapter("bindTimeAgo")
     fun bindTimeAgo(view: TextView, time: String?) {
         if (time == null) return
-        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+        val fixTime = time.replace('T', ' ').replace("Z", "")
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.KOREA)
         var ago: String
         try {
-            val past = format.parse(time)
+            val past = format.parse(fixTime)
             val now = Date()
             val seconds = TimeUnit.MILLISECONDS.toSeconds(now.time - past!!.time)
             val minutes = TimeUnit.MILLISECONDS.toMinutes(now.time - past.time)

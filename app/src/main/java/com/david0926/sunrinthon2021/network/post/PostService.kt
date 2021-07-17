@@ -1,7 +1,9 @@
 package com.david0926.sunrinthon2021.network.post
 
 import com.david0926.sunrinthon2021.data.auth.CommonResponse
+import com.david0926.sunrinthon2021.data.post.CommentRequest
 import com.david0926.sunrinthon2021.data.post.PostRequest
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -33,7 +35,7 @@ interface PostService {
     fun addComment(
         @Path("id") id: String,
         @Header("Authorization") token: String,
-        @Body contents: String
+        @Body commentRequest: CommentRequest?
     ):Call<CommonResponse>
 
     @POST("/api/v1/post/{id}/comment/{comment_id}/vote")

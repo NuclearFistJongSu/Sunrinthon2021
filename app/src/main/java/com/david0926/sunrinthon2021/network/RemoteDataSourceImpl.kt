@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.Log
 import com.david0926.sunrinthon2021.data.UserModel
 import com.david0926.sunrinthon2021.data.auth.*
+import com.david0926.sunrinthon2021.data.post.Comment
+import com.david0926.sunrinthon2021.data.post.CommentRequest
 import com.david0926.sunrinthon2021.data.post.Post
 import com.david0926.sunrinthon2021.data.post.PostRequest
 import com.david0926.sunrinthon2021.network.auth.AuthManager
@@ -416,7 +418,7 @@ class RemoteDataSourceImpl(var context: Context) : RemoteDataSource {
         onResponse: (CommonResponse, Post?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        StockerRetrofit.postService.addComment(_id, "Bearer ${UserCache.getToken(context)}", contents).enqueue(object: Callback<CommonResponse> {
+        StockerRetrofit.postService.addComment(_id, "Bearer ${UserCache.getToken(context)}", CommentRequest(contents)).enqueue(object: Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }
@@ -425,6 +427,7 @@ class RemoteDataSourceImpl(var context: Context) : RemoteDataSource {
                 call: Call<CommonResponse>,
                 response: Response<CommonResponse>
             ) {
+
                 if (response.body() == null) {
 //                    onResponse(
 //                        Gson().fromJson(
@@ -432,9 +435,11 @@ class RemoteDataSourceImpl(var context: Context) : RemoteDataSource {
 //                            CommonResponse::class.java
 //                        ), null
 //                    )
+
                     onFailure(Throwable(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java).message))
 
                 } else {
+                    println(call.request())
                     val post: Post = Gson().fromJson(
                         Gson().toJson(response.body()!!.data),
                         Post::class.java
